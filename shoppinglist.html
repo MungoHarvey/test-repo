@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Girly Fun Shopping List</title>
+  <style>
+    /* Base styling for a clean, fun, and girly feel */
+    body {
+      font-family: 'Trebuchet MS', sans-serif;
+      background: #fff0f6;
+      color: #4a4a4a;
+      margin: 0;
+      padding: 20px;
+    }
+    header {
+      text-align: center;
+      padding: 20px 0;
+    }
+    h1 {
+      font-size: 2.2em;
+      margin: 0;
+      color: #d63384;
+    }
+    /* Container for the shopping list */
+    #shopping-list {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    /* Section styling */
+    .section {
+      margin-bottom: 20px;
+      background: #ffffff;
+      border: 1px solid #ffe3ec;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      overflow: hidden;
+    }
+    /* Section header with fun, girly colours and emojis */
+    .section-header {
+      padding: 12px 20px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: bold;
+      font-size: 1.1em;
+      color: #ffffff;
+    }
+    /* Custom header backgrounds for each section */
+    .fresh-header { background: #ffb6c1; }       /* Pastel pink for produce */
+    .meat-header { background: #ffdab9; }        /* Light peach for meat */
+    .dairy-header { background: #e6e6fa; }       /* Pastel lavender for dairy */
+    .bakery-header { background: #fffacd; }      /* Light yellow for bakery/pasta */
+    .pantry-header { background: #b2f5ea; }      /* Soft mint for pantry/snacks */
+    .clean-header { background: #a0e7e5; }       /* Cool aqua for cleaning */
+    
+    .arrow {
+      font-size: 0.9em;
+    }
+    /* Section content */
+    .section-content {
+      display: none;
+      padding: 15px 20px;
+      background: #fafafa;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    /* List items styling */
+    li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px dashed #ffd1dc;
+    }
+    li:last-child {
+      border-bottom: none;
+    }
+    /* Custom checkbox styling */
+    .custom-checkbox {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #d63384;
+      border-radius: 4px;
+      margin-right: 10px;
+      cursor: pointer;
+      position: relative;
+    }
+    .custom-checkbox.checked {
+      background: #d63384;
+    }
+    .custom-checkbox.checked::after {
+      content: '💖';
+      position: absolute;
+      top: -3px;
+      left: 2px;
+      font-size: 16px;
+    }
+    /* Item name styling */
+    .item-name {
+      flex: 1;
+      cursor: pointer;
+    }
+    .custom-checkbox.checked + .item-name {
+      text-decoration: line-through;
+      opacity: 0.6;
+    }
+    /* Delete button styling */
+    .delete-btn {
+      background: none;
+      border: none;
+      color: #d63384;
+      font-size: 1.4em;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+    /* Add item button and input container styling */
+    .add-btn {
+      margin-top: 10px;
+      padding: 6px 12px;
+      background: #d63384;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.9em;
+    }
+    .add-btn:hover {
+      background: #bf2e6b;
+    }
+    .add-item-container {
+      display: none;
+      margin-top: 10px;
+      gap: 8px;
+      align-items: center;
+    }
+    .add-item-container input {
+      flex: 1;
+      padding: 8px;
+      border: 1px solid #ffd1dc;
+      border-radius: 5px;
+      font-family: inherit;
+    }
+    .add-item-container button {
+      padding: 8px 14px;
+      background: #d63384;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.9em;
+    }
+    .add-item-container button:hover {
+      background: #bf2e6b;
+    }
+    /* New section and clear completed buttons */
+    .new-section-btn, #clear-completed {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 18px;
+      background: #d63384;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1em;
+    }
+    .new-section-btn:hover, #clear-completed:hover {
+      background: #bf2e6b;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Girly Fun Shopping List 💖🌸</h1>
+  </header>
+  <main id="shopping-list">
+    <!-- Fresh Produce Section -->
+    <div class="section">
+      <div class="section-header fresh-header" onclick="toggleSection(this)">
+        <span>Fresh Produce 🌷</span> <span class="arrow">▼</span>
+      </div>
+      <div class="section-content">
+        <ul>
+          <li>
+            <div class="custom-checkbox" onclick="toggleCheck(this)"></div>
+            <span class="item-name" onclick="editItem(this)">Bag of carrots</span>
+            <button class="delete-btn" onclick="deleteItem(this)">×</button>
+          </li>
+          <li>
+            <div class="custom-checkbox" onclick="toggleCheck(this)"></div>
+            <span class="item-name" onclick="editItem(this)">Spronions</span>
+            <button class="delete-btn" onclick="deleteItem(this)">×</button>
+          </li>
+          <li>
+            <div class="custom-checkbox" onclick="toggleCheck(this)"></div>
+            <span class="item-name" onclick="editItem(this)">Bag of onions</span>
+            <button class="delete-btn" onclick="deleteItem(this)">×</button>
+          </li>
+          <li>
+            <div class="custom-checkbox" onclick="toggleCheck(this)"></div>
+            <span class="item-name" onclick="editItem(this)">150g chestnut mushrooms</span>
+            <button class="delete-btn" onclick="deleteItem(this)">×</button>
+          </li>
+          <li>
+            <div class="custom-checkbox" onclick="toggleCheck(this)"></div>
+            <span class="item-name" onclick="editItem(this)">Cabbage</span>
+            <button class="delete-btn" onclick="deleteItem(this)">×</button>
+          </li>
+          <li>
+            <div class="custom-checkbox" onclick="toggleCheck(this)"></div>
+            <span class="item-name" onclick="editItem(this)">Sweet potatoes</span>
+            <button class="delete-btn" onclick="deleteItem(this)">×</button>
+          </li>
+          <li>
+            <div class="custom-checkbox" onclick="toggleCheck(this)"></div>
+            <span class="item-name" onclick="editItem(this)">Ronion</span>
+            <button class="delete-btn" onclick="deleteItem(this)">×</button>
+          </li>
+          <li>
+            <div class="custom-checkbox" onclick="toggleCheck(this)"></div>
+            <span class="item-name" onclick="editItem(this)">Tender stems</span>
+            <button class="delete-btn" onclick="deleteItem(this)">×</button>
+          </li>
+          <li>
+            <div class="custom-checkbox" onclick="toggleCheck(this)"></div>
+            <span class="item-name" onclick="editItem(this)">Grapes</span>
+            <button class="delete-btn" onclick="deleteItem(this)">×</button>
+          </li>
+        </ul>
+        <button class="add-btn" onclick="showAddInput(this)">+ Add Item</button>
+        <div class="add-item-container">
+          <input type="text" placeholder="New item">
+          <button onclick="addItem(this)">Add</button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Meat & Alternatives Section -->
+    <div class="section">
+      <div class="section-header meat-header" onclick="toggleSection(this)">
+        <span>Meat & Alternatives 🍗</span> <span class="arrow">▼</span>
+      </div>
+      <div class="section-content">
+        <ul>
+          <li>
+            <div class="custom-checkbox" onclick="toggleCheck(this)"></div>
+            <span class="item-name" onclick="editItem(this)">Chicken</span>
+            <button class="delete-btn" onclick="deleteItem(this)">×</button>
+          </li>
+        </ul>
+        <button class="add-btn" onclick="showAddInput(this)">+ Add Item</button>
+        <div class="add-item-container">
+          <input type="text" placeholder="New item">
+          <button onclick="addItem(this)">Add</button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Dairy & Cheeses Section -->
+    <div class="section">
+      <div class="section-header dairy-header" onclick="toggleSection(this)">
+        <span>Dairy & Cheeses 🧀</span> <span class="arrow">▼</span>
+      </div>
+      <div class="section-content">
+        <ul>
+          <li>
+            <div class="custom-checkbox" onclick="toggleCheck(this)"></div>
+            <span class="item-name" onclick="editItem(this)">Mozzarella</span>
+            <button class="delete-btn" onclick="deleteItem(this)">×</button>
+          </li>
+          <li>
+            <div class="custom-checkbox" onclick="toggleCheck(this)"></div>
+            <span class="item-name" onclick="editItem(this)">Soft cheese</span>
+            <button class="delete-btn" onclick="deleteItem(this)">×</button>
+          </li>
+        </ul>
+        <button class="add-btn" onclick="showAddInput(this)">+ Add Item</button>
+        <div class="add-item-container">
+          <input type="text" placeholder="New item">
+          <button onclick="addItem(this)">Add</button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Bakery & Pasta Section -->
+    <div class="section">
+      <div class="section-header bakery-header" onclick="toggleSection(this)">
+        <span>Bakery & Pasta 🍞</span> <span class="arrow">▼</span>
+      </div>
+      <div class="section-content">
+        <ul>
+          <li>
+            <div class="custom-checkbox" onclick="toggleCheck(this)"></div>
+            <span class="item-name" onclick="editItem(this)">Bread</span>
+            <button class="delete-btn" onclick="deleteItem(this)">×</button>
+          </li>
+          <li>
+            <div class="custom-checkbox" onclick="toggleCheck(this)"></div>
+            <span class="item-name" onclick="editItem(this)">Panini</span>
+            <button class="delete-btn" onclick="deleteItem(this)">×</button>
+          </li>
+          <li>
+            <div class="custom-checkbox" onclick="toggleCheck(this)"></div>
+            <span class="item-name" onclick="editItem(this)">Gnocchi</span>
+            <button class="delete-btn" onclick="deleteItem(this)">×</button>
+          </li>
+        </ul>
+        <button class="add-btn" onclick="showAddInput(this)">+ Add Item</button>
+        <div class="add-item-container">
+          <input type="text" placeholder="New item">
+          <button onclick="addItem(this)">Add</button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Pantry Essentials & Snacks Section -->
+    <div class="section">
+      <div class="section-header pantry-header" onclick="toggleSection(this)">
+        <span>Pantry & Snacks 🍿</span> <span class="arrow">▼</span>
+      </div>
+      <div class="section-content">
+        <ul>
+          <li>
+            <div class="custom-checkbox" onclick="toggleCheck(this)"></div>
+            <span class="item-name" onclick="editItem(this)">Squeaky bean</span>
+            <button class="delete-btn" onclick="deleteItem(this)">×</button>
+          </li>
+          <li>
+            <div class="custom-checkbox" onclick="toggleCheck(this)"></div>
+            <span class="item-name" onclick="editItem(this)">Popcorn</span>
+            <button class="delete-btn" onclick="deleteItem(this)">×</button>
+          </li>
+        </ul>
+        <button class="add-btn" onclick="showAddInput(this)">+ Add Item</button>
+        <div class="add-item-container">
+          <input type="text" placeholder="New item">
+          <button onclick="addItem(this)">Add</button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Cleaning & Personal Care Section -->
+    <div class="section">
+      <div class="section-header clean-header" onclick="toggleSection(this)">
+        <span>Cleaning & Personal Care 🧼</span> <span class="arrow">▼</span>
+      </div>
+      <div class="section-content">
+        <ul>
+          <li>
+            <div class="custom-checkbox" onclick="toggleCheck(this)"></div>
+            <span class="item-name" onclick="editItem(this)">Ecover honeysuckle</span>
+            <button class="delete-btn" onclick="deleteItem(this)">×</button>
+          </li>
+        </ul>
+        <button class="add-btn" onclick="showAddInput(this)">+ Add Item</button>
+        <div class="add-item-container">
+          <input type="text" placeholder="New item">
+          <button onclick="addItem(this)">Add</button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Clear Completed Items Button -->
+    <button id="clear-completed" onclick="clearCompleted()">Clear Completed Items</button>
+  </main>
+  
+  <script>
+    // Toggle section content visibility
+    function toggleSection(header) {
+      const content = header.nextElementSibling;
+      const arrow = header.querySelector('.arrow');
+      if (content.style.display === 'block') {
+        content.style.display = 'none';
+        arrow.textContent = '▼';
+      } else {
+        content.style.display = 'block';
+        arrow.textContent = '▲';
+      }
+    }
+    
+    // Toggle checkbox state and update appearance
+    function toggleCheck(checkbox) {
+      checkbox.classList.toggle('checked');
+    }
+    
+    // Show or hide the add-item input field
+    function showAddInput(btn) {
+      const container = btn.nextElementSibling;
+      container.style.display = container.style.display === 'flex' ? 'none' : 'flex';
+      if (container.style.display === 'flex') {
+        container.querySelector('input').focus();
+      }
+    }
+    
+    // Add a new item to the list
+    function addItem(btn) {
+      const container = btn.parentElement;
+      const input = container.querySelector('input');
+      const text = input.value.trim();
+      if (!text) return;
+      const ul = container.parentElement.querySelector('ul');
+      const li = document.createElement('li');
+      
+      const checkbox = document.createElement('div');
+      checkbox.className = 'custom-checkbox';
+      checkbox.setAttribute('onclick', 'toggleCheck(this)');
+      
+      const span = document.createElement('span');
+      span.className = 'item-name';
+      span.textContent = text;
+      span.setAttribute('onclick', 'editItem(this)');
+      
+      const delBtn = document.createElement('button');
+      delBtn.className = 'delete-btn';
+      delBtn.textContent = '×';
+      delBtn.setAttribute('onclick', 'deleteItem(this)');
+      
+      li.appendChild(checkbox);
+      li.appendChild(span);
+      li.appendChild(delBtn);
+      ul.appendChild(li);
+      input.value = '';
+    }
+    
+    // Delete an item from the list
+    function deleteItem(btn) {
+      const li = btn.parentElement;
+      li.remove();
+    }
+    
+    // Enable in-place editing for an item
+    function editItem(span) {
+      const currentText = span.textContent;
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.value = currentText;
+      input.style.flex = '1';
+      input.onblur = function() {
+        span.textContent = input.value || currentText;
+        span.style.display = 'block';
+      };
+      span.style.display = 'none';
+      span.parentElement.insertBefore(input, span);
+      input.focus();
+    }
+    
+    // Remove all items that are checked (completed)
+    function clearCompleted() {
+      const items = document.querySelectorAll('.section-content li');
+      items.forEach(li => {
+        const checkbox = li.querySelector('.custom-checkbox');
+        if (checkbox.classList.contains('checked')) {
+          li.remove();
+        }
+      });
+    }
+  </script>
+</body>
+</html>
